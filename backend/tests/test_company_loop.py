@@ -5,7 +5,6 @@ from sqlalchemy.orm import Session
 from app.database import Base, normalized_database_url
 from app.models import Campaign, Creator, CreatorSubmission, StripePayment
 from app.routers.campaigns import review_submission
-from app.routers.stripe_routes import store_payment
 from app.schemas import CEOResponse
 from app.services.metrics import company_metrics
 
@@ -33,10 +32,8 @@ def test_supabase_urls_use_psycopg_and_ssl():
     assert "sslmode=require" in normalized
 
 
-def test_stripe_payment_is_idempotent(db: Session):
-    data = dict(session_id="cs_real", payment_intent_id="pi_real", amount=500, currency="usd", status="paid", email="supporter@example.com", metadata={"campaign_id": "campaign_a", "creator_id": "creator_a", "referral_code": "abc123"})
-    assert store_payment(db, **data) is True
-    assert store_payment(db, **data) is False
+def test_shared_reproclip_payment_updates_growth_metrics(db: Session):
+    db.add(StripePayment(stripe_session_id="cs_real", stripe_payment_intent_id="pi_real", amount_cents=500, currency="usd", status="paid", customer_email="supporter@example.com", campaign_id="campaign_a", creator_id="creator_a", referral_code="abc123"))
     db.commit()
     assert len(db.scalars(select(StripePayment)).all()) == 1
     assert company_metrics(db)["revenue"] == 5

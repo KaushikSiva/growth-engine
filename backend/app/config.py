@@ -21,10 +21,6 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:3001,http://localhost:3000"
     founder_approval_token: str = ""
 
-    stripe_secret_key: str = ""
-    stripe_webhook_secret: str = ""
-    stripe_price_id: str = ""
-
     pioneer_api_key: str = ""
     pioneer_model: str = "Qwen/Qwen3-8B"
     pioneer_base_url: str = "https://api.pioneer.ai/v1"

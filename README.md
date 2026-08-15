@@ -1,6 +1,6 @@
 # ReproClip Autonomous Company
 
-The separate business and growth system for [ReproClip](https://github.com/KaushikSiva/repro-clip). The product remains open source; this service owns voluntary Stripe support, referral attribution, Pioneer CEO decisions, Terac human-work studies, founder approvals, campaign memory, and the hackathon operations console. Supabase managed Postgres is the production system of record.
+The separate Pioneer and Terac growth system for [ReproClip](https://github.com/KaushikSiva/repro-clip). The product remains open source; this service owns growth decisions, Terac human-work studies, founder approvals, campaign memory, referral creation, and the operations console. ReproClip itself owns Stripe Checkout and writes verified payments into the shared Supabase database.
 
 ```text
 Pioneer CEO → Terac creators/testers → referral distribution
@@ -63,19 +63,9 @@ For Render, prefer the Supavisor Session pooler. If transaction mode on port `65
 - Creator work requires `FOUNDER_APPROVAL_TOKEN`; AI recommendations cannot approve payment.
 - Human, social, and financial metrics remain zero or unavailable until persisted results exist.
 
-## Stripe
+## Stripe signal ownership
 
-Create an optional one-time USD $5 Price and set `STRIPE_PRICE_ID`. If omitted, Checkout uses inline `$5` price data. Register the webhook URL:
-
-```text
-https://YOUR-API.onrender.com/api/stripe/webhook
-```
-
-Subscribe to `checkout.session.completed` and `payment_intent.succeeded`, then copy the signing secret to `STRIPE_WEBHOOK_SECRET`. For local testing:
-
-```bash
-stripe listen --forward-to localhost:8000/api/stripe/webhook
-```
+Stripe credentials, `/support`, `/thanks`, Checkout creation, and webhook verification live in the main ReproClip application. Both services use the same `SUPABASE_DATABASE_URL`; growth-engine reads `stripe_payments` and `visits` as business signals but does not execute payments. Configure Stripe's webhook as `https://YOUR-REPROCLIP-HOST/api/stripe/webhook`.
 
 ## Terac
 
@@ -97,7 +87,7 @@ Create a Blueprint from `render.yaml`. The Blueprint intentionally does not crea
 - Web `NEXT_PUBLIC_API_URL` and `COMPANY_API_URL` to the API URL.
 - Product `REPROCLIP_COMPANY_URL` to the company web URL.
 
-Then add Stripe, Pioneer, Terac, and optional Linq secrets in Render. `alembic upgrade head` runs against Supabase as the pre-deploy migration command already defined in the Blueprint.
+Then add Pioneer, Terac, and optional Linq secrets in Render. `alembic upgrade head` runs against Supabase as the pre-deploy migration command already defined in the Blueprint. Configure Stripe only on the main ReproClip service.
 
 ## Tests
 
@@ -109,15 +99,15 @@ cd web && npm run typecheck && npm run lint && npm run build
 ## Exact demo flow
 
 1. Open `/company`; verify Supabase is connected and revenue plus all unavailable integrations are honest zero-state values.
-2. Add keys in Render, set a nonzero `TERAC_BUDGET_USD`, and open `/support` in a second window.
+2. Add keys in Render, set a nonzero `TERAC_BUDGET_USD`, and open the main ReproClip app's `/support` page in a second window.
 3. In the company console, run the Pioneer CEO with the founder token. A schema-validated decision and next campaign draft are persisted.
 4. Open that campaign and request creator feasibility. The screen shows only the real Terac request ID/status/cost.
 5. When Terac prices it, click **Approve spend & launch**. Sync submissions from the real opportunity.
 6. Ingest a creator submission from the Terac result, review its media, and manually approve or reject it. No payout approval is automated.
 7. With at least two approved creatives, request the separate general-population study and ingest the real per-creative scores.
 8. Share the campaign or creator `/r/<code>` URL. The redirect records the visit and preserves campaign/creator attribution through ReproClip.
-9. Click **Support ReproClip — $5** and complete real Stripe Checkout. The signed webhook persists $5 and attribution.
-10. Return to `/demo`: the payment appears, Pioneer runs a revenue review in the background, and a non-STOP decision drafts the next learned campaign.
+9. Click **Support ReproClip — $5** in the main app and complete real Stripe Checkout. ReproClip's signed webhook persists $5 and attribution into shared Supabase.
+10. Return to `/demo`: the payment appears. Run the next Pioneer review to use that revenue signal in the next Terac campaign decision.
 
 ## Result ingestion and optional services
 
@@ -127,4 +117,4 @@ cd web && npm run typecheck && npm run lint && npm run build
 - `POST /api/company/qa/replay` stores a Replay run URL and its real PASS/FAIL checks; the UI never invents QA status.
 - Linq sends founder review notifications when configured. ReproClip itself can also send the public YouTube link to your phone.
 
-These mutation routes require `X-Founder-Token` except public Checkout, referrals, visits, and the signed Stripe webhook.
+These mutation routes require `X-Founder-Token` except public referrals and visits. Checkout and the signed Stripe webhook are served by the main ReproClip application.

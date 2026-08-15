@@ -27,12 +27,6 @@ services:
         sync: false
       - key: FOUNDER_APPROVAL_TOKEN
         generateValue: true
-      - key: STRIPE_SECRET_KEY
-        sync: false
-      - key: STRIPE_WEBHOOK_SECRET
-        sync: false
-      - key: STRIPE_PRICE_ID
-        sync: false
       - key: PIONEER_API_KEY
         sync: false
       - key: PIONEER_MODEL

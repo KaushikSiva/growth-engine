@@ -33,13 +33,6 @@ class CampaignCreate(BaseModel):
     budget_usd: float = Field(default=0, ge=0, le=1000)
 
 
-class CheckoutCreate(BaseModel):
-    referral_code: str | None = Field(default=None, max_length=24)
-    campaign_id: str | None = Field(default=None, max_length=40)
-    creator_id: str | None = Field(default=None, max_length=40)
-    source: str | None = Field(default=None, max_length=80)
-
-
 class VisitCreate(BaseModel):
     referral_code: str | None = Field(default=None, max_length=24)
     campaign_id: str | None = Field(default=None, max_length=40)
