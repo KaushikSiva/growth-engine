@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "@fontsource-variable/dm-sans";
+@import "@fontsource-variable/manrope";
+
+:root { --ink:#171916; --paper:#f4f4ee; --lime:#d8ff57; --muted:#74776e; --line:rgba(23,25,22,.1); }
+* { box-sizing:border-box; }
+html { background:var(--paper); color:var(--ink); }
+body { margin:0; font-family:"DM Sans Variable",sans-serif; background:radial-gradient(circle at 78% 0%,rgba(216,255,87,.13),transparent 34%),var(--paper); }
+.display { font-family:"Manrope Variable",sans-serif; letter-spacing:-.045em; }
+.hairline { border-color:var(--line); }
+.grid-noise { background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:24px 24px; }
+.tabular { font-variant-numeric:tabular-nums; }
+button,a,input,textarea,select { -webkit-tap-highlight-color:transparent; }
+button { cursor:pointer; }

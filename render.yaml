@@ -1,0 +1,66 @@
+services:
+  - type: web
+    name: reproclip-company-api
+    runtime: python
+    rootDir: backend
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    preDeployCommand: alembic upgrade head
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.7
+      - key: SUPABASE_DATABASE_URL
+        sync: false
+      - key: SUPABASE_MIGRATION_URL
+        sync: false
+      - key: DATABASE_POOL_SIZE
+        value: "5"
+      - key: DATABASE_MAX_OVERFLOW
+        value: "5"
+      - key: APP_BASE_URL
+        sync: false
+      - key: PRODUCT_BASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: FOUNDER_APPROVAL_TOKEN
+        generateValue: true
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PRICE_ID
+        sync: false
+      - key: PIONEER_API_KEY
+        sync: false
+      - key: PIONEER_MODEL
+        value: Qwen/Qwen3-8B
+      - key: TERAC_API_KEY
+        sync: false
+      - key: TERAC_MCP_URL
+        value: https://terac.com/api/mcp
+      - key: TERAC_BUDGET_USD
+        value: "0"
+      - key: LINQ_API_KEY
+        sync: false
+      - key: LINQ_FROM_NUMBER
+        sync: false
+      - key: LINQ_TO_NUMBER
+        sync: false
+
+  - type: web
+    name: reproclip-company-web
+    runtime: node
+    rootDir: web
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22.13.0
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: COMPANY_API_URL
+        sync: false
