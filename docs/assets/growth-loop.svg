@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="680" viewBox="0 0 1400 680" role="img" aria-labelledby="title desc">
+  <title id="title">The Growth Engine loop</title>
+  <desc id="desc">Pioneer decides, Terac recruits and tests, the founder approves, ReproClip distributes, Stripe verifies revenue, and persistent memory feeds the next decision.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#121410"/><stop offset="1" stop-color="#20251a"/></linearGradient>
+    <radialGradient id="glow" cx="75%" cy="15%" r="70%"><stop stop-color="#d8ff57" stop-opacity=".16"/><stop offset="1" stop-color="#d8ff57" stop-opacity="0"/></radialGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#000" flood-opacity=".38"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#d8ff57"/></marker>
+  </defs>
+  <rect width="1400" height="680" rx="40" fill="url(#bg)"/>
+  <rect width="1400" height="680" rx="40" fill="url(#glow)"/>
+  <g fill="none" stroke="#d8ff57" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" opacity=".85">
+    <path d="M368 231 C455 135 561 112 655 150"/>
+    <path d="M845 151 C955 120 1058 162 1105 248"/>
+    <path d="M1142 378 C1111 483 1011 531 910 521"/>
+    <path d="M705 555 C598 588 478 550 423 473"/>
+    <path d="M285 376 C245 324 258 264 304 226"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" filter="url(#shadow)">
+    <g transform="translate(110 210)"><rect width="292" height="176" rx="28" fill="#f4f4ee"/><text x="28" y="42" fill="#74786d" font-size="14" font-weight="800" letter-spacing="3">01 · STRATEGY</text><text x="28" y="92" fill="#151713" font-size="36" font-weight="800">Pioneer</text><text x="28" y="126" fill="#656960" font-size="17">bounded AI CEO decisions</text><circle cx="255" cy="42" r="12" fill="#d8ff57"/></g>
+    <g transform="translate(530 74)"><rect width="340" height="176" rx="28" fill="#7b61ff"/><text x="28" y="42" fill="#ddd6ff" font-size="14" font-weight="800" letter-spacing="3">02 · HUMAN WORK</text><text x="28" y="92" fill="#fff" font-size="36" font-weight="800">Terac</text><text x="28" y="126" fill="#e8e3ff" font-size="17">creators + preference tests</text><circle cx="303" cy="42" r="12" fill="#d8ff57"/></g>
+    <g transform="translate(998 233)"><rect width="292" height="176" rx="28" fill="#d8ff57"/><text x="28" y="42" fill="#4f5d18" font-size="14" font-weight="800" letter-spacing="3">03 · CONTROL</text><text x="28" y="92" fill="#151713" font-size="36" font-weight="800">Founder</text><text x="28" y="126" fill="#4f561f" font-size="17">spend + release approval</text><circle cx="255" cy="42" r="12" fill="#151713"/></g>
+    <g transform="translate(736 442)"><rect width="350" height="176" rx="28" fill="#f4f4ee"/><text x="28" y="42" fill="#74786d" font-size="14" font-weight="800" letter-spacing="3">04 · REVENUE TRUTH</text><text x="28" y="92" fill="#635bff" font-size="36" font-weight="800">Stripe</text><text x="28" y="126" fill="#656960" font-size="17">signed, attributed payments</text><circle cx="313" cy="42" r="12" fill="#635bff"/></g>
+    <g transform="translate(274 418)"><rect width="350" height="176" rx="28" fill="#242820" stroke="#40463a"/><text x="28" y="42" fill="#a5aa9c" font-size="14" font-weight="800" letter-spacing="3">05 · COMPANY MEMORY</text><text x="28" y="92" fill="#fff" font-size="36" font-weight="800">Learn</text><text x="28" y="126" fill="#aeb3a7" font-size="17">persist evidence; decide again</text><circle cx="313" cy="42" r="12" fill="#d8ff57"/></g>
+  </g>
+  <g transform="translate(528 282)" font-family="Inter, Arial, sans-serif"><rect width="344" height="112" rx="56" fill="#151713" stroke="#d8ff57" stroke-width="2"/><text x="172" y="51" text-anchor="middle" fill="#d8ff57" font-size="14" font-weight="800" letter-spacing="3">PRODUCT SURFACE</text><text x="172" y="81" text-anchor="middle" fill="#fff" font-size="26" font-weight="800">ReproClip</text></g>
+  <text x="70" y="72" fill="#fff" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" letter-spacing="4">THE AUTONOMOUS GROWTH LOOP</text>
+  <text x="70" y="106" fill="#91978a" font-family="Inter, Arial, sans-serif" font-size="16">Every arrow carries persisted evidence—not vibes.</text>
+</svg>

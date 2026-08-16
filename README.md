@@ -1,18 +1,111 @@
-# ReproClip Autonomous Company
+<div align="center">
 
-The separate Pioneer and Terac growth system for [ReproClip](https://github.com/KaushikSiva/repro-clip). The product remains open source; this service owns growth decisions, Terac human-work studies, founder approvals, campaign memory, referral creation, and the operations console. ReproClip itself owns Stripe Checkout and writes verified payments into the shared Supabase database.
+# Growth Engine
+
+### The autonomous company behind [ReproClip](https://github.com/KaushikSiva/repro-clip)
+
+**AI strategy → real human work → founder approval → distribution → verified revenue → a smarter next decision.**
+
+[![Stars](https://img.shields.io/github/stars/KaushikSiva/growth-engine?style=for-the-badge&color=d8ff57&labelColor=171916)](https://github.com/KaushikSiva/growth-engine/stargazers)
+[![ReproClip](https://img.shields.io/badge/PRODUCT-REPROCLIP-d8ff57?style=for-the-badge&labelColor=171916)](https://github.com/KaushikSiva/repro-clip)
+[![Render](https://img.shields.io/badge/DEPLOYED%20WITH-RENDER-7b61ff?style=for-the-badge&labelColor=171916)](https://render.com/)
+[![Python](https://img.shields.io/badge/BACKEND-FASTAPI-009688?style=for-the-badge&labelColor=171916)](./backend)
+[![Next.js](https://img.shields.io/badge/CONSOLE-NEXT.JS-f4f4ee?style=for-the-badge&labelColor=171916)](./web)
+
+<br />
+
+<img src="docs/assets/growth-loop.svg" alt="Growth Engine loop from Pioneer strategy through Terac human work, founder approval, ReproClip distribution, Stripe revenue, and persistent learning" width="100%" />
+
+</div>
+
+## The idea
+
+ReproClip can record a workflow and turn it into a focused product demo. Growth Engine answers the harder question: **can the product learn how to grow itself without pretending that AI can replace judgment, customers, or payment truth?**
+
+This repository contains the project's major operating system. It gives ReproClip an AI CEO, an on-demand human workforce, approval gates around money, campaign and referral memory, real revenue attribution, and a founder console that refuses to manufacture success.
 
 ```text
-Pioneer CEO → Terac creators/testers → referral distribution
-      ↑                                      ↓
-business memory ← Stripe $5 support ← ReproClip
+Pioneer decides what to try
+        ↓
+Terac recruits creators and tests work with real people
+        ↓
+The founder approves financial actions and creative releases
+        ↓
+ReproClip distributes attributed links and accepts support
+        ↓
+Stripe proves what was actually paid
+        ↓
+Growth Engine persists the evidence and Pioneer decides again
 ```
 
-No marketing employees. No seeded revenue. No automatic creator payout approval.
+There are **zero marketing employees**, no seeded revenue, no invented engagement, and no automatic creator payout approval.
 
-## Local setup
+## Sponsors became infrastructure
 
-Create `.env` first. For a real local-to-production test, paste your Supabase URLs as described below. If `SUPABASE_DATABASE_URL` is blank, the backend deliberately falls back to a local SQLite file.
+<p align="center">
+  <img src="docs/assets/sponsor-stack.svg" alt="Sponsor stack: Terac, Stripe, Lovable, Render, Linq, Superserve, Replay, and Pioneer" width="100%" />
+</p>
+
+These tools are part of the product story, not a logo wall:
+
+| Sponsor | How we used it | Where the evidence lives |
+| --- | --- | --- |
+| **[Pioneer](https://pioneer.ai/)** | Runs the bounded AI CEO. It receives persisted business state and returns a schema-validated growth decision, budget, campaign hypothesis, and next actions using open-weight inference. | [`backend/app/services/pioneer.py`](backend/app/services/pioneer.py) |
+| **[Terac](https://terac.com/mcp)** | Gives the AI company a real human supply layer. Growth Engine discovers Terac MCP tools, requests priced creator or research work, launches only after founder approval, and synchronizes verified submissions. | [`backend/app/services/terac.py`](backend/app/services/terac.py) |
+| **[Stripe](https://stripe.com/)** | Provides payment truth. ReproClip owns Checkout and signature-verified webhooks; Growth Engine reads the shared, persisted payments to calculate conversion, CAC, ROAS, and contribution. It never treats a click as revenue. | [`backend/app/services/metrics.py`](backend/app/services/metrics.py) and [ReproClip payments](https://github.com/KaushikSiva/repro-clip/tree/main/app/api/stripe) |
+| **[Linq](https://www.linqapp.com/)** | Closes the founder-review loop with direct phone notifications when a submission needs a human decision. AI can recommend; the message brings the accountable person back into the workflow. | [`backend/app/services/linq.py`](backend/app/services/linq.py) |
+| **[Render](https://render.com/)** | Hosts the FastAPI control plane and Next.js company console as a two-service Blueprint, runs database migrations before release, and keeps configuration in infrastructure-as-code. | [`render.yaml`](render.yaml) |
+| **[Replay](https://www.replay.io/)** | Captures reproducible browser-debugging evidence. Growth Engine stores the real Replay run URL and its explicit pass/fail checks so QA status is auditable instead of inferred. | [`POST /api/company/qa/replay`](backend/app/routers/company.py) |
+| **[Superserve](https://www.superserve.ai/)** | Supplies isolated compute for ReproClip's media pipeline. Auto Edit creates a sandbox, analyzes interaction signals, runs FFmpeg, and returns the rendered artifact; Growth Engine receives the product outcomes rather than doing video work itself. | [ReproClip Superserve integration](https://github.com/KaushikSiva/repro-clip/blob/main/lib/superserve.ts) |
+| **[Lovable](https://lovable.dev/)** | Accelerated early product and interface exploration for the customer-facing experience. Those rapid prototypes helped shape the workflow that Growth Engine now measures and improves with real signals. | Product-design phase; production implementation lives in [ReproClip](https://github.com/KaushikSiva/repro-clip) |
+
+## One loop, real state
+
+Growth Engine does not let model output masquerade as company progress. Each stage advances only when the corresponding external event has been persisted.
+
+1. **Decide.** Pioneer sees real metrics, Terac feedback, current spend, and prior decisions. Its JSON must pass a strict Pydantic schema and stay within the configured budget.
+2. **Commission.** Terac receives a concrete creator or general-population research brief and returns a real feasibility request and price.
+3. **Approve.** A founder token is required before spend launches and before creator work is accepted or rejected.
+4. **Distribute.** Each campaign and creator gets an attributed `/r/<code>` link; visits are stored rather than estimated.
+5. **Verify.** ReproClip's Stripe webhook writes only signed payment events into the shared database.
+6. **Learn.** Campaign economics and human preference results become the next Pioneer input snapshot.
+
+## What you can see
+
+The Next.js operations console exposes the company as it really is:
+
+- a live Pioneer CEO decision and its bounded rationale;
+- campaigns tied to Terac jobs, creators, and human studies;
+- individual creator submissions with explicit founder review;
+- attributed visits, supporters, revenue, spend, CAC, ROAS, and contribution;
+- a live activity stream backed by persisted events;
+- a judge/demo view whose checkpoints remain visibly incomplete until real events exist.
+
+## Architecture
+
+| Layer | Technology | Responsibility |
+| --- | --- | --- |
+| Company console | Next.js, React, Tailwind CSS | Decisions, campaigns, submissions, economics, demo state |
+| Control plane | FastAPI, Pydantic, SQLAlchemy | Guarded workflows, schemas, integrations, event recording |
+| Business memory | Supabase Postgres, Alembic | Campaigns, studies, creators, referrals, visits, payments, decisions |
+| AI executive | Pioneer | Structured strategy from persisted state |
+| Human workforce | Terac MCP | Creators, feedback panels, feasibility, verified results |
+| Revenue truth | Stripe via ReproClip | Checkout, signed webhooks, attributed support payments |
+| Founder channel | Linq | Review and approval notifications |
+| QA evidence | Replay | Reproducible browser runs and explicit checks |
+| Media compute | Superserve via ReproClip | Isolated analysis and FFmpeg rendering |
+| Deployment | Render Blueprint | FastAPI and Next.js services with pre-deploy migrations |
+
+## Safety is a feature
+
+- **No fake traction.** Human, social, and financial metrics remain zero or unavailable until real results are persisted.
+- **No model-controlled money.** `FOUNDER_APPROVAL_TOKEN` gates spend and submission decisions.
+- **No unverified revenue.** Only Stripe webhook-verified payments count.
+- **No imaginary integrations.** Missing credentials keep an integration explicitly unavailable.
+- **No hidden chain of thought.** Pioneer stores a concise business rationale, not private reasoning traces.
+- **No browser database secrets.** Supabase credentials stay inside the FastAPI service.
+
+## Run it locally
 
 ```bash
 cp .env.example .env
@@ -23,98 +116,63 @@ python3 -m venv .venv
 .venv/bin/alembic upgrade head
 .venv/bin/uvicorn app.main:app --reload
 
-# separate terminal
+# In another terminal
 cd web
 npm install
 npm run dev
 ```
 
-Open `http://localhost:3001/company`. The backend is `http://localhost:8000`.
+Open `http://localhost:3001/company`. The API runs at `http://localhost:8000`. Without `SUPABASE_DATABASE_URL`, local development deliberately uses SQLite.
 
-## Supabase database
+<details>
+<summary><strong>Production configuration</strong></summary>
 
-1. Create a Supabase project and open **Connect** in the project dashboard.
-2. For `SUPABASE_DATABASE_URL`, copy the **Session pooler** connection string on port `5432`. This works from Render's persistent FastAPI service over IPv4.
-3. For `SUPABASE_MIGRATION_URL`, use the direct connection string when your machine/deployment has IPv6. Otherwise use the same Session pooler URL.
-4. URL-encode special characters in the database password.
-5. Apply the checked-in Alembic schema:
+Create a Render Blueprint from [`render.yaml`](render.yaml). Use Supabase's Session pooler URL on port `5432` for the API's `SUPABASE_DATABASE_URL`, then configure:
 
-```bash
-cd backend
-.venv/bin/alembic upgrade head
-.venv/bin/alembic current
-```
+- `SUPABASE_MIGRATION_URL`
+- `APP_BASE_URL`, `PRODUCT_BASE_URL`, and `CORS_ORIGINS`
+- `NEXT_PUBLIC_API_URL` and `COMPANY_API_URL`
+- `PIONEER_API_KEY` and `PIONEER_MODEL`
+- `TERAC_API_KEY`, `TERAC_MCP_URL`, and a nonzero `TERAC_BUDGET_USD`
+- optional Linq and Replay variables
 
-Expected head:
+Stripe secrets remain on ReproClip. Both services point to the same Supabase database so verified payment and attribution events become Growth Engine signals.
 
-```text
-1a81ff1d16b5 (head)
-```
+</details>
 
-Supabase is accessed only by the FastAPI server. No database password or service-role credential is sent to the Next.js client. Alembic remains the one schema-migration authority; do not make production schema edits manually in Supabase's Table Editor.
-
-For Render, prefer the Supavisor Session pooler. If transaction mode on port `6543` is intentionally selected, the backend automatically disables prepared statements and SQLAlchemy connection pooling as required by that mode.
-
-## Safety boundaries
-
-- Stripe revenue appears only after a signature-verified webhook.
-- Pioneer output is validated against a strict Pydantic schema; only concise business rationale is stored.
-- Terac status changes only after a real MCP response.
-- Creator work requires `FOUNDER_APPROVAL_TOKEN`; AI recommendations cannot approve payment.
-- Human, social, and financial metrics remain zero or unavailable until persisted results exist.
-
-## Stripe signal ownership
-
-Stripe credentials, `/support`, `/thanks`, Checkout creation, and webhook verification live in the main ReproClip application. Both services use the same `SUPABASE_DATABASE_URL`; growth-engine reads `stripe_payments` and `visits` as business signals but does not execute payments. Configure Stripe's webhook as `https://YOUR-REPROCLIP-HOST/api/stripe/webhook`.
-
-## Terac
-
-Create a Terac organization API key (`tk_…`) and set `TERAC_API_KEY`. The integration connects to `https://terac.com/api/mcp`, discovers tools, requests feasibility, waits for a real quote, and exposes a separate founder action to launch spend. Creator and general-population studies are separate records.
-
-## Pioneer
-
-Set `PIONEER_API_KEY` and a supported open-weight model in `PIONEER_MODEL` (or use `Qwen/Qwen3-8B`). The CEO receives only persisted business state and returns schema-validated JSON. Missing credentials leave the CEO explicitly unavailable.
-
-## Render
-
-Create a Blueprint from `render.yaml`. The Blueprint intentionally does not create a Render Postgres database—Supabase is the only production database. After Render assigns URLs, set:
-
-- API `SUPABASE_DATABASE_URL` to the Session pooler URL.
-- API `SUPABASE_MIGRATION_URL` to the direct or Session pooler migration URL.
-- API `APP_BASE_URL` to the company web URL.
-- API `PRODUCT_BASE_URL` to the deployed ReproClip product URL.
-- API `CORS_ORIGINS` to both URLs.
-- Web `NEXT_PUBLIC_API_URL` and `COMPANY_API_URL` to the API URL.
-- Product `REPROCLIP_COMPANY_URL` to the company web URL.
-
-Then add Pioneer, Terac, and optional Linq secrets in Render. `alembic upgrade head` runs against Supabase as the pre-deploy migration command already defined in the Blueprint. Configure Stripe only on the main ReproClip service.
-
-## Tests
+## Verify the system
 
 ```bash
 cd backend && .venv/bin/pytest -q
 cd web && npm run typecheck && npm run lint && npm run build
 ```
 
-## Exact demo flow
+The tests prove that zero-state metrics stay honest, a persisted Stripe payment changes company revenue, Pioneer cannot return an unknown or unbounded decision, and creator work remains pending until explicit founder review.
 
-1. Open `/company`; verify Supabase is connected and revenue plus all unavailable integrations are honest zero-state values.
-2. Add keys in Render, set a nonzero `TERAC_BUDGET_USD`, and open the main ReproClip app's `/support` page in a second window.
-3. In the company console, run the Pioneer CEO with the founder token. A schema-validated decision and next campaign draft are persisted.
-4. Open that campaign and request creator feasibility. The screen shows only the real Terac request ID/status/cost.
-5. When Terac prices it, click **Approve spend & launch**. Sync submissions from the real opportunity.
-6. Ingest a creator submission from the Terac result, review its media, and manually approve or reject it. No payout approval is automated.
-7. With at least two approved creatives, request the separate general-population study and ingest the real per-creative scores.
-8. Share the campaign or creator `/r/<code>` URL. The redirect records the visit and preserves campaign/creator attribution through ReproClip.
-9. Click **Support ReproClip — $5** in the main app and complete real Stripe Checkout. ReproClip's signed webhook persists $5 and attribution into shared Supabase.
-10. Return to `/demo`: the payment appears. Run the next Pioneer review to use that revenue signal in the next Terac campaign decision.
+## Repository map
 
-## Result ingestion and optional services
+```text
+growth-engine/
+├── backend/
+│   ├── app/services/       # Pioneer, Terac, Linq, metrics
+│   ├── app/routers/        # company, campaigns, referrals
+│   ├── alembic/            # production schema history
+│   └── tests/              # honest company-loop tests
+├── web/
+│   ├── app/company/        # operating console
+│   └── app/demo/           # real-state judge flow
+├── render.yaml             # two-service deployment
+└── .env.example            # configuration contract
+```
 
-- `POST /api/submissions/ingest` accepts a real Terac creator result for founder review.
-- `POST /api/human-tests/ingest` accepts structured scores from the real general-population study.
-- `POST /api/social-posts` records a creator-submitted public URL and only metrics actually provided.
-- `POST /api/company/qa/replay` stores a Replay run URL and its real PASS/FAIL checks; the UI never invents QA status.
-- Linq sends founder review notifications when configured. ReproClip itself can also send the public YouTube link to your phone.
+## Follow the experiment
 
-These mutation routes require `X-Founder-Token` except public referrals and visits. Checkout and the signed Stripe webhook are served by the main ReproClip application.
+This is an experiment in giving an open-source product a measurable, human-grounded growth loop—not replacing every person with a prompt.
+
+If that is a future you want to explore, **[star Growth Engine](https://github.com/KaushikSiva/growth-engine)**, try [ReproClip](https://github.com/KaushikSiva/repro-clip), and open an issue with the first part of the loop you would improve.
+
+<div align="center">
+
+**Built around real people, real payments, and real evidence.**
+
+</div>
